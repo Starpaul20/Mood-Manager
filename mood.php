@@ -18,13 +18,15 @@ if($mybb->user['uid'] == 0)
 	error_no_permission();
 }
 
+$mood_cache = $cache->read("moods");
+
 if($mybb->input['action'] == "do_change" && $mybb->request_method == "post")
 {
 	// Verify incoming POST request
 	verify_post_check($mybb->input['my_post_key']);
 
 	$update_mood = array(
-		"mood" => $db->escape_string($mybb->input['mood'])
+		"mood" => intval($mybb->input['mood'])
 	);
 	$db->update_query("users", $update_mood, "uid='".intval($mybb->user['uid'])."'");
 
@@ -34,36 +36,52 @@ if($mybb->input['action'] == "do_change" && $mybb->request_method == "post")
 
 if(!$mybb->input['action'])
 {
-	$mybb->user['mood'] = htmlspecialchars_uni($mybb->user['mood']);
+	$mybb->user['mood'] = intval($mybb->user['mood']);
 	if(!$mybb->user['mood'])
 	{
 		$current_mood = $lang->no_mood;
 	}
 	else
 	{
-		$current_mood = "<img src=images/mood/{$mybb->user['mood']}.gif alt=\"{$mybb->user['mood']}\">";
-	}
-
-	$mood_list = array();
-	$mood_files = scandir(MYBB_ROOT."images/mood/");
-	foreach($mood_files as $mood_file)
-	{
-		if(is_file(MYBB_ROOT."images/mood/{$mood_file}") && get_extension($mood_file) == "gif")
+		$currentmood = $mood_cache[$mybb->user['mood']];
+		if($mybb->user['language'] != "english" && $mybb->user['language'] != "")
 		{
-			$mood_file_id = preg_replace("#\.".get_extension($mood_file)."$#i", "$1", $mood_file);
-			$mood_list[$mood_file_id] = $mood_file_id;
+			$language = $mybb->user['language'];
+		}
+		elseif($mybb->settings['bblanguage'] != "english")
+		{
+			$language = $mybb->settings['bblanguage'];
+		}
+		else
+		{
+			$language = "english";
+		}
+
+		$path = str_replace("{lang}", $language, $currentmood['path']);
+		$currentmood['name'] = $lang->parse($currentmood['name']);
+
+		if(!is_file($path))
+		{
+			$englishpath = str_replace("{lang}", "english", $currentmood['path']);
+			$current_mood = "<img src=\"{$englishpath}\" alt=\"{$currentmood['name']}\" title=\"{$currentmood['name']}\" />";
+		}
+		else
+		{
+			$current_mood = "<img src=\"{$path}\" alt=\"{$currentmood['name']}\" title=\"{$currentmood['name']}\" />";
 		}
 	}
 
-	$moodoptions = '';
-	foreach($mood_list as $value => $option)
+	$query = $db->simple_select("moods", "*", "", array('order_by' => 'name', 'order_dir' => 'asc'));
+	while($mood = $db->fetch_array($query))
 	{
+		$moodname = $lang->parse($mood['name']);
+
 		$selected = "";
-		if($mybb->user['mood'] == $value)
+		if($mybb->user['mood'] == $mood['mid'])
 		{
 			$selected = "selected=\"selected\"";
 		}
-		$moodoptions .= "<option value=\"{$value}\"{$selected}>{$option}</option>\n";
+		$moodoptions .= "<option value=\"{$mood['mid']}\"{$selected}>{$moodname}</option>\n";
 	}
 
 	eval("\$mood = \"".$templates->get("mood")."\";");
