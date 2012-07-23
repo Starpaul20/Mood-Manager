@@ -356,8 +356,13 @@ function moodmanager_activate()
 <head>
 <title>{$mybb->settings[\'bbname\']} - {$lang->mood_updated}</title>
 {$headerinclude}
+<script language="javascript" type="text/javascript">
+<!--
+window.setTimeout(\'window.location="mood.php"; \',1500);
+//-->
+</script>
 </head>
-<body onunload="window.opener.location.reload();">
+<body>
 <br />
 <table border="0" cellspacing="{$theme[\'borderwidth\']}" cellpadding="{$theme[\'tablespace\']}" class="tborder">
 <tr>
@@ -515,7 +520,7 @@ function moodmanager_datacache_class()
 
 	if(class_exists('MyDatacache'))
 	{
-		class MoodDatacache
+		class MoodDatacache extends MyDatacache
 		{
 			function update_moods()
 			{
