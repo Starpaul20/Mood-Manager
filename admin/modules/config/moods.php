@@ -12,10 +12,10 @@ if(!defined("IN_MYBB"))
 
 $page->add_breadcrumb_item($lang->moods, "index.php?module=config-moods");
 
-$lang->load("mood");
+$lang->load("mood", true);
 
 if($mybb->input['action'] == "add")
-{	
+{
 	if($mybb->request_method == "post")
 	{
 		if(!trim($mybb->input['name']))
@@ -89,7 +89,7 @@ if($mybb->input['action'] == "add")
 }
 
 if($mybb->input['action'] == "edit")
-{	
+{
 	$query = $db->simple_select("moods", "*", "mid='".intval($mybb->input['mid'])."'");
 	$mood = $db->fetch_array($query);
 
@@ -168,7 +168,7 @@ if($mybb->input['action'] == "edit")
 }
 
 if($mybb->input['action'] == "delete")
-{	
+{
 	$query = $db->simple_select("moods", "*", "mid='".intval($mybb->input['mid'])."'");
 	$mood = $db->fetch_array($query);
 
@@ -209,7 +209,7 @@ if($mybb->input['action'] == "delete")
 }
 
 if(!$mybb->input['action'])
-{	
+{
 	$page->output_header($lang->moods);
 
 	$sub_tabs['manage_moods'] = array(
