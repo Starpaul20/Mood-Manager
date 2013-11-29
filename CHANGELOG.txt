@@ -1,0 +1,11 @@
+1.1.1
+- Bug: Fixed Admin CP language error for 1.6.11
+
+1.1
+- Added language translation option for mood icons
+- Added 100 new mood icons
+- Added redirect when updating mood
+- Added cache of moods
+
+1.0
+- Initial release
