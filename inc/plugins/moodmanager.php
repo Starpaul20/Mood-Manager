@@ -319,15 +319,11 @@ function moodmanager_activate()
 
 	$insert_array = array(
 		'title'		=> 'mood',
-		'template'	=> $db->escape_string('<html>
-<head>
-<title>{$mybb->settings[\'bbname\']} - {$lang->change_mood}</title>
-{$headerinclude}
-</head>
-<body>
-<br />
-<form action="mood.php" method="post">
+		'template'	=> $db->escape_string('<div class="modal">
+<div style="overflow-y: auto; max-height: 400px;" class="modal_{$mybb->user[\'uid\']}">
+<form action="mood.php" method="post" class="moodclass_{$mybb->user[\'uid\']}" onsubmit="javascript: return Mood.submitMood({$mybb->user[\'uid\']});">
 <input type="hidden" name="my_post_key" value="{$mybb->post_code}" />
+<input type="hidden" name="action" value="do_change" />
 <table border="0" cellspacing="{$theme[\'borderwidth\']}" cellpadding="{$theme[\'tablespace\']}" class="tborder">
 <tr>
 <td class="trow1" style="padding: 20px">
@@ -338,14 +334,13 @@ function moodmanager_activate()
 <option value="">{$lang->no_mood}</option>
 {$moodoptions}
 </select>
-<input type="hidden" name="action" value="do_change" />
-<input type="submit" class="button" name="submit" value="{$lang->change_mood}" />
+<input type="submit" class="button" value="{$lang->change_mood}" />
 </td>
 </tr>
 </table>
 </form>
-</body>
-</html>'),
+</div>
+</div>'),
 		'sid'		=> '-1',
 		'version'	=> '',
 		'dateline'	=> TIME_NOW
@@ -354,36 +349,14 @@ function moodmanager_activate()
 
 	$insert_array = array(
 		'title'		=> 'mood_updated',
-		'template'	=> $db->escape_string('<html>
-<head>
-<title>{$mybb->settings[\'bbname\']} - {$lang->mood_updated}</title>
-{$headerinclude}
-<script language="javascript" type="text/javascript">
-<!--
-window.setTimeout(\'window.location="mood.php"; \',1500);
-//-->
-</script>
-</head>
-<body>
-<br />
-<table border="0" cellspacing="{$theme[\'borderwidth\']}" cellpadding="{$theme[\'tablespace\']}" class="tborder">
+		'template'	=> $db->escape_string('<table border="0" cellspacing="{$theme[\'borderwidth\']}" cellpadding="{$theme[\'tablespace\']}" class="tborder">
 <tr>
 <td class="trow1" style="padding: 20px">
 <strong>{$lang->mood_updated}</strong><br /><br />
 <blockquote>{$lang->mood_updated_message}</blockquote>
-<br /><br />
-<div style="text-align: center;">
-<script type="text/javascript">
-<!--
-document.write(\'[<a href="javascript:window.close();">{$lang->close_window}</a>]\');
-// -->
-</script>
-</div>
 </td>
 </tr>
-</table>
-</body>
-</html>'),
+</table>'),
 		'sid'		=> '-1',
 		'version'	=> '',
 		'dateline'	=> TIME_NOW
@@ -395,6 +368,7 @@ document.write(\'[<a href="javascript:window.close();">{$lang->close_window}</a>
 	find_replace_templatesets("postbit_classic", "#".preg_quote('{$post[\'user_details\']}')."#i", '{$post[\'user_details\']}<br />{$post[\'usermood\']}');
 	find_replace_templatesets("member_profile", "#".preg_quote('{$online_status}')."#i", '{$online_status}<br /><strong>{$lang->mood}:</strong> {$mood}');
 	find_replace_templatesets("header_welcomeblock_member", "#".preg_quote('{$lang->welcome_open_buddy_list}</a>')."#i", '{$lang->welcome_open_buddy_list}</a> | {$moodlink}');
+	find_replace_templatesets("headerinclude", "#".preg_quote('{$stylesheets}')."#i", '<script type="text/javascript" src="{$mybb->asset_url}/jscripts/mood.js?ver=1800"></script>{$stylesheets}');
 }
 
 // This function runs when the plugin is deactivated.
@@ -409,6 +383,7 @@ function moodmanager_deactivate()
 	find_replace_templatesets("member_profile", "#".preg_quote('<br /><strong>{$lang->mood}:</strong> {$mood}')."#i", '', 0);
 	find_replace_templatesets("header_welcomeblock_member", "#".preg_quote(' | {$moodlink}')."#i", '', 0);
 	find_replace_templatesets("header_welcomeblock_member", "#".preg_quote('{$moodlink}')."#i", '', 0);
+	find_replace_templatesets("headerinclude", "#".preg_quote('<script type="text/javascript" src="{$mybb->asset_url}/jscripts/mood.js?ver=1800"></script>')."#i", '', 0);
 }
 
 // Link to Mood pop-up
@@ -419,7 +394,7 @@ function moodmanager_link()
 
 	if($mybb->user['uid'])
 	{
-		$moodlink = "<strong><a href=\"javascript:MyBB.popupWindow('mood.php', 'mood', '400', '300')\">{$lang->change_mood}</a></strong>";
+		$moodlink = "<strong><a href=\"javascript:;\" onclick=\"MyBB.popupWindow('/mood.php'); return false;\">{$lang->change_mood}</a></strong>";
 	}
 }
 

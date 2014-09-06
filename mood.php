@@ -19,19 +19,21 @@ if($mybb->user['uid'] == 0)
 }
 
 $mood_cache = $cache->read("moods");
+$mybb->input['action'] = $mybb->get_input('action');
 
 if($mybb->input['action'] == "do_change" && $mybb->request_method == "post")
 {
 	// Verify incoming POST request
-	verify_post_check($mybb->input['my_post_key']);
+	verify_post_check($mybb->get_input('my_post_key'));
 
 	$update_mood = array(
-		"mood" => $mybb->get_input('mood', 1);
+		"mood" => $mybb->get_input('mood', 1)
 	);
 	$db->update_query("users", $update_mood, "uid='".(int)$mybb->user['uid']."'");
 
-	eval("\$updated = \"".$templates->get("mood_updated")."\";");
-	output_page($updated);
+	eval("\$updated = \"".$templates->get("mood_updated", 1, 0)."\";");
+	echo $updated;
+	exit;
 }
 
 if(!$mybb->input['action'])
@@ -84,8 +86,9 @@ if(!$mybb->input['action'])
 		$moodoptions .= "<option value=\"{$mood['mid']}\"{$selected}>{$moodname}</option>\n";
 	}
 
-	eval("\$mood = \"".$templates->get("mood")."\";");
-	output_page($mood);
+	eval("\$changemood = \"".$templates->get("mood", 1, 0)."\";");
+	echo $changemood;
+	exit;
 }
 
 ?>
