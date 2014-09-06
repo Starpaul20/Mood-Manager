@@ -29,7 +29,6 @@ $plugins->add_hook("postbit_announcement", "moodmanager_postbit");
 $plugins->add_hook("postbit_prev", "moodmanager_postbit");
 $plugins->add_hook("member_profile_end", "moodmanager_profile");
 
-$plugins->add_hook("admin_tools_cache_begin", "moodmanager_datacache_class");
 $plugins->add_hook("admin_config_menu", "moodmanager_admin_menu");
 $plugins->add_hook("admin_config_action_handler", "moodmanager_admin_action_handler");
 $plugins->add_hook("admin_config_permissions", "moodmanager_admin_permissions");
@@ -487,39 +486,6 @@ function moodmanager_profile()
 	else
 	{
 		$mood = $lang->not_specified;
-	}
-}
-
-// Rebuild mood cache in Admin CP
-function moodmanager_datacache_class()
-{
-	global $cache;
-
-	if(class_exists('MyDatacache'))
-	{
-		class MoodDatacache extends MyDatacache
-		{
-			function update_moods()
-			{
-				update_moods();
-			}
-		}
-
-		$cache = null;
-		$cache = new MoodDatacache;
-	}
-	else
-	{
-		class MyDatacache extends datacache
-		{
-			function update_moods()
-			{
-				update_moods();
-			}
-		}
-
-		$cache = null;
-		$cache = new MyDatacache;
 	}
 }
 
