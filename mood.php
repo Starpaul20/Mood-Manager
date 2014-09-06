@@ -26,9 +26,9 @@ if($mybb->input['action'] == "do_change" && $mybb->request_method == "post")
 	verify_post_check($mybb->input['my_post_key']);
 
 	$update_mood = array(
-		"mood" => intval($mybb->input['mood'])
+		"mood" => $mybb->get_input('mood', 1);
 	);
-	$db->update_query("users", $update_mood, "uid='".intval($mybb->user['uid'])."'");
+	$db->update_query("users", $update_mood, "uid='".(int)$mybb->user['uid']."'");
 
 	eval("\$updated = \"".$templates->get("mood_updated")."\";");
 	output_page($updated);
@@ -36,7 +36,7 @@ if($mybb->input['action'] == "do_change" && $mybb->request_method == "post")
 
 if(!$mybb->input['action'])
 {
-	$mybb->user['mood'] = intval($mybb->user['mood']);
+	$mybb->user['mood'] = (int)$mybb->user['mood'];
 	if(!$mybb->user['mood'])
 	{
 		$current_mood = $lang->no_mood;

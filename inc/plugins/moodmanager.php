@@ -432,7 +432,7 @@ function moodmanager_postbit($post)
 
 	if($post['mood'])
 	{
-		$post['mood'] = intval($post['mood']);
+		$post['mood'] = (int)$post['mood'];
 		$currentmood = $mood_cache[$post['mood']];
 
 		if($mybb->user['language'] != "english" && $mybb->user['language'] != "")
@@ -480,7 +480,7 @@ function moodmanager_profile()
 
 	if($memprofile['mood'])
 	{
-		$memprofile['mood'] = intval($memprofile['mood']);
+		$memprofile['mood'] = (int)$memprofile['mood'];
 		$currentmood = $mood_cache[$memprofile['mood']];
 
 		if($mybb->user['language'] != "english" && $mybb->user['language'] != "")

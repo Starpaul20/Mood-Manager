@@ -90,7 +90,7 @@ if($mybb->input['action'] == "add")
 
 if($mybb->input['action'] == "edit")
 {
-	$query = $db->simple_select("moods", "*", "mid='".intval($mybb->input['mid'])."'");
+	$query = $db->simple_select("moods", "*", "mid='".(int)$mybb->input['mid']."'");
 	$mood = $db->fetch_array($query);
 
 	if(!$mood['mid'])
@@ -118,7 +118,7 @@ if($mybb->input['action'] == "edit")
 				'path'	=> $db->escape_string($mybb->input['path'])
 			);
 
-			$db->update_query("moods", $mood, "mid='".intval($mybb->input['mid'])."'");
+			$db->update_query("moods", $mood, "mid='".(int)$mybb->input['mid']."'");
 
 			update_moods();
 
@@ -169,7 +169,7 @@ if($mybb->input['action'] == "edit")
 
 if($mybb->input['action'] == "delete")
 {
-	$query = $db->simple_select("moods", "*", "mid='".intval($mybb->input['mid'])."'");
+	$query = $db->simple_select("moods", "*", "mid='".(int)$mybb->input['mid']."'");
 	$mood = $db->fetch_array($query);
 
 	if(!$mood['mid'])
@@ -225,7 +225,7 @@ if(!$mybb->input['action'])
 
 	$page->output_nav_tabs($sub_tabs, 'manage_moods');
 
-	$pagenum = intval($mybb->input['page']);
+	$pagenum = $mybb->get_input('page', 1);
 	if($pagenum)
 	{
 		$start = ($pagenum - 1) * 20;
