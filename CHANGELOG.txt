@@ -3,14 +3,14 @@
 
 ## Version number reset for MyBB 1.8 ##
 
-1.1.1
+1.1.1 (November 29th, 2013)
 - Bug: Fixed Admin CP language error for 1.6.11
 
-1.1
+1.1 (July 24th, 2012)
 - Added language translation option for mood icons
 - Added 100 new mood icons
 - Added redirect when updating mood
 - Added cache of moods
 
-1.0
+1.0 (February 27th, 2012)
 - Initial release
