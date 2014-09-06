@@ -366,7 +366,7 @@ function moodmanager_activate()
 	find_replace_templatesets("postbit", "#".preg_quote('{$post[\'user_details\']}')."#i", '{$post[\'user_details\']}<br />{$post[\'usermood\']}');
 	find_replace_templatesets("postbit_classic", "#".preg_quote('{$post[\'user_details\']}')."#i", '{$post[\'user_details\']}<br />{$post[\'usermood\']}');
 	find_replace_templatesets("member_profile", "#".preg_quote('{$online_status}')."#i", '{$online_status}<br /><strong>{$lang->mood}:</strong> {$mood}');
-	find_replace_templatesets("header_welcomeblock_member", "#".preg_quote('{$lang->welcome_open_buddy_list}</a>')."#i", '{$lang->welcome_open_buddy_list}</a> | {$moodlink}');
+	find_replace_templatesets("header_welcomeblock_member", "#".preg_quote('<ul class="menu user_links">')."#i", '<ul class="menu user_links">{$moodlink}');
 	find_replace_templatesets("headerinclude", "#".preg_quote('{$stylesheets}')."#i", '<script type="text/javascript" src="{$mybb->asset_url}/jscripts/mood.js?ver=1800"></script>{$stylesheets}');
 }
 
@@ -380,7 +380,6 @@ function moodmanager_deactivate()
 	find_replace_templatesets("postbit", "#".preg_quote('<br />{$post[\'usermood\']}')."#i", '', 0);
 	find_replace_templatesets("postbit_classic", "#".preg_quote('<br />{$post[\'usermood\']}')."#i", '', 0);
 	find_replace_templatesets("member_profile", "#".preg_quote('<br /><strong>{$lang->mood}:</strong> {$mood}')."#i", '', 0);
-	find_replace_templatesets("header_welcomeblock_member", "#".preg_quote(' | {$moodlink}')."#i", '', 0);
 	find_replace_templatesets("header_welcomeblock_member", "#".preg_quote('{$moodlink}')."#i", '', 0);
 	find_replace_templatesets("headerinclude", "#".preg_quote('<script type="text/javascript" src="{$mybb->asset_url}/jscripts/mood.js?ver=1800"></script>')."#i", '', 0);
 }
@@ -393,7 +392,7 @@ function moodmanager_link()
 
 	if($mybb->user['uid'])
 	{
-		$moodlink = "<strong><a href=\"javascript:;\" onclick=\"MyBB.popupWindow('/mood.php'); return false;\">{$lang->change_mood}</a></strong>";
+		$moodlink = "<li><strong><a href=\"javascript:;\" onclick=\"MyBB.popupWindow('/mood.php'); return false;\">{$lang->change_mood}</a></strong></li>";
 	}
 }
 
