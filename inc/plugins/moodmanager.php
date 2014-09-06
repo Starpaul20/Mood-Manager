@@ -38,9 +38,12 @@ $plugins->add_hook("admin_tools_get_admin_log_action", "moodmanager_admin_adminl
 // The information that shows up on the plugin manager
 function moodmanager_info()
 {
+	global $lang;
+	$lang->load("config_moods");
+
 	return array(
-		"name"				=> "Mood Manager",
-		"description"		=> "Allows users to set a mood for themselves to display on postbit/profile.",
+		"name"				=> $lang->moodmanager_info_name,
+		"description"		=> $lang->moodmanager_info_desc,
 		"website"			=> "http://galaxiesrealm.com/index.php",
 		"author"			=> "Starpaul20",
 		"authorsite"		=> "http://galaxiesrealm.com/index.php",

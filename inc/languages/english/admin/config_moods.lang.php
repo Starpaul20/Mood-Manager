@@ -4,6 +4,9 @@
  * Copyright 2012 Starpaul20
  */
 
+$l['moodmanager_info_name'] = "Mood Manager";
+$l['moodmanager_info_desc'] = "Allows users to set a mood for themselves to display on postbit/profile.";
+
 $l['moods'] = "Moods";
 $l['can_manage_moods'] = "Can manage moods?";
 
