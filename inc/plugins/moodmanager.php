@@ -18,11 +18,22 @@ if(my_strpos($_SERVER['PHP_SELF'], 'showthread.php'))
 	{
 		$templatelist .= ',';
 	}
-	$templatelist .= 'postbit_mood';
+	$templatelist .= 'postbit_mood,global_mood';
+}
+
+if(my_strpos($_SERVER['PHP_SELF'], 'member.php'))
+{
+	global $templatelist;
+	if(isset($templatelist))
+	{
+		$templatelist .= ',';
+	}
+	$templatelist .= 'global_mood';
 }
 
 // Tell MyBB when to run the hooks
-$plugins->add_hook("global_start", "moodmanager_link");
+$plugins->add_hook("global_start", "moodmanager_link_cache");
+$plugins->add_hook("global_intermediate", "moodmanager_link");
 $plugins->add_hook("postbit", "moodmanager_postbit");
 $plugins->add_hook("postbit_pm", "moodmanager_postbit");
 $plugins->add_hook("postbit_announcement", "moodmanager_postbit");
@@ -348,6 +359,15 @@ function moodmanager_activate()
 	$db->insert_query("templates", $insert_array);
 
 	$insert_array = array(
+		'title'		=> 'mood_option',
+		'template'	=> $db->escape_string('<option value="{$mood[\'mid\']}"{$selected}>{$mood[\'name\']}</option>'),
+		'sid'		=> '-1',
+		'version'	=> '',
+		'dateline'	=> TIME_NOW
+	);
+	$db->insert_query("templates", $insert_array);
+
+	$insert_array = array(
 		'title'		=> 'mood_updated',
 		'template'	=> $db->escape_string('<table border="0" cellspacing="{$theme[\'borderwidth\']}" cellpadding="{$theme[\'tablespace\']}" class="tborder">
 <tr>
@@ -357,6 +377,24 @@ function moodmanager_activate()
 </td>
 </tr>
 </table>'),
+		'sid'		=> '-1',
+		'version'	=> '',
+		'dateline'	=> TIME_NOW
+	);
+	$db->insert_query("templates", $insert_array);
+
+	$insert_array = array(
+		'title'		=> 'header_moodlink',
+		'template'	=> $db->escape_string('<li><strong><a href="javascript:;" onclick="MyBB.popupWindow(\'/mood.php\'); return false;">{$lang->change_mood}</a></strong></li>'),
+		'sid'		=> '-1',
+		'version'	=> '',
+		'dateline'	=> TIME_NOW
+	);
+	$db->insert_query("templates", $insert_array);
+
+	$insert_array = array(
+		'title'		=> 'global_mood',
+		'template'	=> $db->escape_string('<img src="{$currentmood[\'path\']}" alt="{$currentmood[\'name\']}" title="{$currentmood[\'name\']}" />'),
 		'sid'		=> '-1',
 		'version'	=> '',
 		'dateline'	=> TIME_NOW
@@ -375,7 +413,7 @@ function moodmanager_activate()
 function moodmanager_deactivate()
 {
 	global $db;
-	$db->delete_query("templates", "title IN('postbit_mood','mood','mood_updated')");
+	$db->delete_query("templates", "title IN('postbit_mood','mood','mood_option','mood_updated','header_moodlink','global_mood')");
 
 	include MYBB_ROOT."/inc/adminfunctions_templates.php";
 	find_replace_templatesets("postbit", "#".preg_quote('<br />{$post[\'usermood\']}')."#i", '', 0);
@@ -383,6 +421,17 @@ function moodmanager_deactivate()
 	find_replace_templatesets("member_profile", "#".preg_quote('<br /><strong>{$lang->mood}:</strong> {$mood}')."#i", '', 0);
 	find_replace_templatesets("header_welcomeblock_member", "#".preg_quote('{$moodlink}')."#i", '', 0);
 	find_replace_templatesets("headerinclude", "#".preg_quote('<script type="text/javascript" src="{$mybb->asset_url}/jscripts/mood.js?ver=1800"></script>')."#i", '', 0);
+}
+
+// Cache the header mood template
+function moodmanager_link_cache()
+{
+	global $templatelist;
+	if(isset($templatelist))
+	{
+		$templatelist .= ',';
+	}
+	$templatelist .= 'header_moodlink';
 }
 
 // Link to Mood pop-up
@@ -393,18 +442,18 @@ function moodmanager_link()
 
 	if($mybb->user['uid'])
 	{
-		$moodlink = "<li><strong><a href=\"javascript:;\" onclick=\"MyBB.popupWindow('/mood.php'); return false;\">{$lang->change_mood}</a></strong></li>";
+		eval("\$moodlink = \"".$templates->get("header_moodlink")."\";");
 	}
 }
 
 // Display Mood on Postbit
 function moodmanager_postbit($post)
 {
-	global $db, $mybb, $lang, $templates, $cache;
+	global $mybb, $lang, $templates, $cache;
 	$lang->load("mood");
 	$mood_cache = $cache->read("moods");
 
-	if($post['mood'])
+	if(!empty($post['mood']))
 	{
 		$post['mood'] = (int)$post['mood'];
 		$currentmood = $mood_cache[$post['mood']];
@@ -422,18 +471,19 @@ function moodmanager_postbit($post)
 			$language = "english";
 		}
 
-		$path = str_replace("{lang}", $language, $currentmood['path']);
+		$icon_path = str_replace("{lang}", $language, $currentmood['path']);
 		$currentmood['name'] = $lang->parse($currentmood['name']);
 
-		if(!is_file($path))
+		if(!is_file($icon_path))
 		{
-			$englishpath = str_replace("{lang}", "english", $currentmood['path']);
-			$mood = "<img src=\"{$englishpath}\" alt=\"{$currentmood['name']}\" title=\"{$currentmood['name']}\" />";
+			$currentmood['path'] = str_replace("{lang}", "english", $currentmood['path']);
 		}
 		else
 		{
-			$mood = "<img src=\"{$path}\" alt=\"{$currentmood['name']}\" title=\"{$currentmood['name']}\" />";
+			$currentmood['path'] = str_replace("{lang}", $language, $currentmood['path']);
 		}
+
+		eval("\$mood = \"".$templates->get("global_mood")."\";");
 	}
 	else
 	{
@@ -448,11 +498,11 @@ function moodmanager_postbit($post)
 // Display Mood in Profiles
 function moodmanager_profile()
 {
-	global $db, $mybb, $lang, $memprofile, $mood, $cache;
+	global $mybb, $lang, $templates, $memprofile, $mood, $cache;
 	$lang->load("mood");
 	$mood_cache = $cache->read("moods");
 
-	if($memprofile['mood'])
+	if(!empty($memprofile['mood']))
 	{
 		$memprofile['mood'] = (int)$memprofile['mood'];
 		$currentmood = $mood_cache[$memprofile['mood']];
@@ -470,18 +520,19 @@ function moodmanager_profile()
 			$language = "english";
 		}
 
-		$path = str_replace("{lang}", $language, $currentmood['path']);
+		$icon_path = str_replace("{lang}", $language, $currentmood['path']);
 		$currentmood['name'] = $lang->parse($currentmood['name']);
 
-		if(!is_file($path))
+		if(!is_file($icon_path))
 		{
-			$englishpath = str_replace("{lang}", "english", $currentmood['path']);
-			$mood = "<img src=\"{$englishpath}\" alt=\"{$currentmood['name']}\" title=\"{$currentmood['name']}\" />";
+			$currentmood['path'] = str_replace("{lang}", "english", $currentmood['path']);
 		}
 		else
 		{
-			$mood = "<img src=\"{$path}\" alt=\"{$currentmood['name']}\" title=\"{$currentmood['name']}\" />";
+			$currentmood['path'] = str_replace("{lang}", $language, $currentmood['path']);
 		}
+
+		eval("\$mood = \"".$templates->get("global_mood")."\";");
 	}
 	else
 	{

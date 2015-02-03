@@ -7,7 +7,8 @@
 define("IN_MYBB", 1);
 define('THIS_SCRIPT', 'mood.php');
 
-$templatelist = 'mood,mood_updated';
+$templatelist = "mood,mood_updated,mood_option,global_mood";
+
 require_once "./global.php";
 
 // Load global language phrases
@@ -59,31 +60,33 @@ if(!$mybb->input['action'])
 			$language = "english";
 		}
 
-		$path = str_replace("{lang}", $language, $currentmood['path']);
+		$icon_path = str_replace("{lang}", $language, $currentmood['path']);
 		$currentmood['name'] = $lang->parse($currentmood['name']);
 
-		if(!is_file($path))
+		if(!is_file($icon_path))
 		{
-			$englishpath = str_replace("{lang}", "english", $currentmood['path']);
-			$current_mood = "<img src=\"{$englishpath}\" alt=\"{$currentmood['name']}\" title=\"{$currentmood['name']}\" />";
+			$currentmood['path'] = str_replace("{lang}", "english", $currentmood['path']);
 		}
 		else
 		{
-			$current_mood = "<img src=\"{$path}\" alt=\"{$currentmood['name']}\" title=\"{$currentmood['name']}\" />";
+			$currentmood['path'] = str_replace("{lang}", $language, $currentmood['path']);
 		}
+
+		eval("\$current_mood = \"".$templates->get("global_mood")."\";");
 	}
 
 	$query = $db->simple_select("moods", "*", "", array('order_by' => 'name', 'order_dir' => 'asc'));
 	while($mood = $db->fetch_array($query))
 	{
-		$moodname = $lang->parse($mood['name']);
+		$mood['name'] = $lang->parse($mood['name']);
 
-		$selected = "";
+		$selected = '';
 		if($mybb->user['mood'] == $mood['mid'])
 		{
 			$selected = "selected=\"selected\"";
 		}
-		$moodoptions .= "<option value=\"{$mood['mid']}\"{$selected}>{$moodname}</option>\n";
+
+		eval("\$moodoptions .= \"".$templates->get("mood_option")."\";");
 	}
 
 	eval("\$changemood = \"".$templates->get("mood", 1, 0)."\";");
