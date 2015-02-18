@@ -321,7 +321,7 @@ function moodmanager_activate()
 
 	$insert_array = array(
 		'title'		=> 'postbit_mood',
-		'template'	=> $db->escape_string('{$lang->mood}: {$mood}<br />'),
+		'template'	=> $db->escape_string('<br />{$lang->mood}: {$mood}'),
 		'sid'		=> '-1',
 		'version'	=> '',
 		'dateline'	=> TIME_NOW
@@ -402,8 +402,8 @@ function moodmanager_activate()
 	$db->insert_query("templates", $insert_array);
 
 	include MYBB_ROOT."/inc/adminfunctions_templates.php";
-	find_replace_templatesets("postbit", "#".preg_quote('{$post[\'user_details\']}')."#i", '{$post[\'user_details\']}<br />{$post[\'usermood\']}');
-	find_replace_templatesets("postbit_classic", "#".preg_quote('{$post[\'user_details\']}')."#i", '{$post[\'user_details\']}<br />{$post[\'usermood\']}');
+	find_replace_templatesets("postbit", "#".preg_quote('{$post[\'user_details\']}')."#i", '{$post[\'user_details\']}{$post[\'usermood\']}');
+	find_replace_templatesets("postbit_classic", "#".preg_quote('{$post[\'user_details\']}')."#i", '{$post[\'user_details\']}{$post[\'usermood\']}');
 	find_replace_templatesets("member_profile", "#".preg_quote('{$online_status}')."#i", '{$online_status}<br /><strong>{$lang->mood}:</strong> {$mood}');
 	find_replace_templatesets("header_welcomeblock_member", "#".preg_quote('<ul class="menu user_links">')."#i", '<ul class="menu user_links">{$moodlink}');
 	find_replace_templatesets("headerinclude", "#".preg_quote('{$stylesheets}')."#i", '<script type="text/javascript" src="{$mybb->asset_url}/jscripts/mood.js?ver=1800"></script>{$stylesheets}');
@@ -416,8 +416,8 @@ function moodmanager_deactivate()
 	$db->delete_query("templates", "title IN('postbit_mood','mood','mood_option','mood_updated','header_moodlink','global_mood')");
 
 	include MYBB_ROOT."/inc/adminfunctions_templates.php";
-	find_replace_templatesets("postbit", "#".preg_quote('<br />{$post[\'usermood\']}')."#i", '', 0);
-	find_replace_templatesets("postbit_classic", "#".preg_quote('<br />{$post[\'usermood\']}')."#i", '', 0);
+	find_replace_templatesets("postbit", "#".preg_quote('{$post[\'usermood\']}')."#i", '', 0);
+	find_replace_templatesets("postbit_classic", "#".preg_quote('{$post[\'usermood\']}')."#i", '', 0);
 	find_replace_templatesets("member_profile", "#".preg_quote('<br /><strong>{$lang->mood}:</strong> {$mood}')."#i", '', 0);
 	find_replace_templatesets("header_welcomeblock_member", "#".preg_quote('{$moodlink}')."#i", '', 0);
 	find_replace_templatesets("headerinclude", "#".preg_quote('<script type="text/javascript" src="{$mybb->asset_url}/jscripts/mood.js?ver=1800"></script>')."#i", '', 0);
