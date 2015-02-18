@@ -28,7 +28,7 @@ if($mybb->input['action'] == "do_change" && $mybb->request_method == "post")
 	verify_post_check($mybb->get_input('my_post_key'));
 
 	$update_mood = array(
-		"mood" => $mybb->get_input('mood', 1)
+		"mood" => $mybb->get_input('mood', MyBB::INPUT_INT)
 	);
 	$db->update_query("users", $update_mood, "uid='".(int)$mybb->user['uid']."'");
 

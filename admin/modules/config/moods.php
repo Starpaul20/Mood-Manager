@@ -90,7 +90,7 @@ if($mybb->input['action'] == "add")
 
 if($mybb->input['action'] == "edit")
 {
-	$query = $db->simple_select("moods", "*", "mid='".(int)$mybb->input['mid']."'");
+	$query = $db->simple_select("moods", "*", "mid='".$mybb->get_input('mid', MyBB::INPUT_INT)."'");
 	$mood = $db->fetch_array($query);
 
 	if(!$mood['mid'])
@@ -169,7 +169,7 @@ if($mybb->input['action'] == "edit")
 
 if($mybb->input['action'] == "delete")
 {
-	$query = $db->simple_select("moods", "*", "mid='".(int)$mybb->input['mid']."'");
+	$query = $db->simple_select("moods", "*", "mid='".$mybb->get_input('mid', MyBB::INPUT_INT)."'");
 	$mood = $db->fetch_array($query);
 
 	if(!$mood['mid'])
@@ -225,7 +225,7 @@ if(!$mybb->input['action'])
 
 	$page->output_nav_tabs($sub_tabs, 'manage_moods');
 
-	$pagenum = $mybb->get_input('page', 1);
+	$pagenum = $mybb->get_input('page', MyBB::INPUT_INT);
 	if($pagenum)
 	{
 		$start = ($pagenum - 1) * 20;
