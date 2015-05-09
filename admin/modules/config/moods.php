@@ -41,7 +41,7 @@ if($mybb->input['action'] == "add")
 
 			// Log admin action
 			$name = $lang->parse($mybb->input['name']);
-			log_admin_action($mid, $name);
+			log_admin_action($mid, htmlspecialchars_uni($name));
 
 			flash_message($lang->success_mood_added, 'success');
 			admin_redirect('index.php?module=config-moods');
@@ -124,7 +124,7 @@ if($mybb->input['action'] == "edit")
 
 			// Log admin action
 			$name = $lang->parse($mybb->input['name']);
-			log_admin_action($mood['mid'], $name);
+			log_admin_action($mood['mid'], htmlspecialchars_uni($name));
 
 			flash_message($lang->success_mood_updated, 'success');
 			admin_redirect('index.php?module=config-moods');
@@ -197,7 +197,7 @@ if($mybb->input['action'] == "delete")
 
 		// Log admin action
 		$name = $lang->parse($mood['name']);
-		log_admin_action($mood['mid'], $name);
+		log_admin_action($mood['mid'], htmlspecialchars_uni($name));
 
 		flash_message($lang->success_mood_deleted, 'success');
 		admin_redirect("index.php?module=config-moods");
