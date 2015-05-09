@@ -17,7 +17,7 @@ $l['edit_mood_desc'] = "Here you can edit a mood icon.";
 $l['manage_moods'] = "Manage Moods";
 $l['manage_moods_desc'] = "This section allows you to edit, delete, and manage your mood icons.";
 
-$l['name_desc'] = "This is the name for the mood icon.";
+$l['name_desc'] = "This is the name for the mood icon. Use <lang:language_string> to allow mood name to be translated (language string must be added to mood.lang.php file).";
 $l['image_path'] = "Image Path";
 $l['image_path_desc'] = "This is the path to the mood icon image. Use {lang} to represent the user's chosen language if translated mood icons are available.";
 $l['save_mood'] = "Save Mood";

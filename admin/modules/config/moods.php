@@ -75,7 +75,7 @@ if($mybb->input['action'] == "add")
 
 	$form = new Form("index.php?module=config-moods&amp;action=add", "post", "add");
 	$form_container = new FormContainer($lang->add_mood);
-	$form_container->output_row($lang->name." <em>*</em>", $lang->name_desc, $form->generate_text_box('name', $mybb->input['name'], array('id' => 'name')), 'name');
+	$form_container->output_row($lang->name." <em>*</em>", htmlspecialchars_uni($lang->name_desc), $form->generate_text_box('name', $mybb->input['name'], array('id' => 'name')), 'name');
 	$form_container->output_row($lang->image_path." <em>*</em>", $lang->image_path_desc, $form->generate_text_box('path', $mybb->input['path'], array('id' => 'path')), 'path');
 	$form_container->end();
 
@@ -155,7 +155,7 @@ if($mybb->input['action'] == "edit")
 	}
 
 	$form_container = new FormContainer($lang->edit_mood);
-	$form_container->output_row($lang->name." <em>*</em>", $lang->name_desc, $form->generate_text_box('name', $mybb->input['name'], array('id' => 'name')), 'name');
+	$form_container->output_row($lang->name." <em>*</em>", htmlspecialchars_uni($lang->name_desc), $form->generate_text_box('name', $mybb->input['name'], array('id' => 'name')), 'name');
 	$form_container->output_row($lang->image_path." <em>*</em>", $lang->image_path_desc, $form->generate_text_box('path', $mybb->input['path'], array('id' => 'path')), 'path');
 	$form_container->end();
 
