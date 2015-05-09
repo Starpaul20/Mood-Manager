@@ -70,14 +70,45 @@ function moodmanager_install()
 	moodmanager_uninstall();
 	$collation = $db->build_create_table_collation();
 
-	$db->write_query("CREATE TABLE ".TABLE_PREFIX."moods (
-				mid int(10) unsigned NOT NULL auto_increment,
+	switch($db->type)
+	{
+		case "pgsql":
+			$db->write_query("CREATE TABLE ".TABLE_PREFIX."moods (
+				mid serial,
 				name varchar(120) NOT NULL default '',
 				path varchar(220) NOT NULL default '',
-				PRIMARY KEY(mid)
-			) ENGINE=MyISAM{$collation}");
+				PRIMARY KEY (mid)
+			);");
+			break;
+		case "sqlite":
+			$db->write_query("CREATE TABLE ".TABLE_PREFIX."moods (
+				mid INTEGER PRIMARY KEY,
+				name varchar(120) NOT NULL default '',
+				path varchar(220) NOT NULL default ''
+			);");
+			break;
+		default:
+			$db->write_query("CREATE TABLE ".TABLE_PREFIX."moods (
+				mid int unsigned NOT NULL auto_increment,
+				name varchar(120) NOT NULL default '',
+				path varchar(220) NOT NULL default '',
+				PRIMARY KEY (mid)
+			) ENGINE=MyISAM{$collation};");
+			break;
+	}
 
-	$db->add_column("users", "mood", "int(3) unsigned NOT NULL default '0'");
+	switch($db->type)
+	{
+		case "pgsql":
+			$db->add_column("users", "mood", "int NOT NULL default '0'");
+			break;
+		case "sqlite":
+			$db->add_column("users", "mood", "int NOT NULL default '0'");
+			break;
+		default:
+			$db->add_column("users", "mood", "int unsigned NOT NULL default '0'");
+			break;
+	}
 
 	$db->write_query("INSERT INTO ".TABLE_PREFIX."moods (mid, name, path) VALUES
 (1, '<lang:mood_addicted>', 'images/mood/{lang}/Addicted.gif'),
