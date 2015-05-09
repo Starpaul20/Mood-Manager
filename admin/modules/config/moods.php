@@ -113,18 +113,18 @@ if($mybb->input['action'] == "edit")
 
 		if(!$errors)
 		{
-			$mood = array(
+			$update_mood = array(
 				'name'	=> $db->escape_string($mybb->input['name']),
 				'path'	=> $db->escape_string($mybb->input['path'])
 			);
 
-			$db->update_query("moods", $mood, "mid='".(int)$mybb->input['mid']."'");
+			$db->update_query("moods", $update_mood, "mid='{$mood['mid']}'");
 
 			update_moods();
 
 			// Log admin action
 			$name = $lang->parse($mybb->input['name']);
-			log_admin_action($mybb->input['mid'], $name);
+			log_admin_action($mood['mid'], $name);
 
 			flash_message($lang->success_mood_updated, 'success');
 			admin_redirect('index.php?module=config-moods');
@@ -197,7 +197,7 @@ if($mybb->input['action'] == "delete")
 
 		// Log admin action
 		$name = $lang->parse($mood['name']);
-		log_admin_action($mybb->input['mid'], $name);
+		log_admin_action($mood['mid'], $name);
 
 		flash_message($lang->success_mood_deleted, 'success');
 		admin_redirect("index.php?module=config-moods");
