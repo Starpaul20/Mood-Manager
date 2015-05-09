@@ -1,3 +1,11 @@
+1.2 (May 9th, 2015)
+- Added PostgreSQL and SQLite support
+- Updated cache delete function
+- Use queried id instead of input
+- Use htmlspecialchars_uni when logging admin action
+- Added mention that language strings can be used in mood names
+- Dropping useless globals
+
 1.1 (February 18th, 2015)
 - Moved hardcoded HTML to template
 - Fixed line break layout on postbit
