@@ -591,7 +591,7 @@ function moodmanager_admin_action_handler($actions)
 
 function moodmanager_admin_permissions($admin_permissions)
 {
-	global $db, $mybb, $lang;
+	global $lang;
 	$lang->load("config_moods");
 
 	$admin_permissions['moods'] = $lang->can_manage_moods;
