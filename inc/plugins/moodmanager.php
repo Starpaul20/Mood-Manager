@@ -329,7 +329,7 @@ function moodmanager_is_installed()
 // This function runs when the plugin is uninstalled.
 function moodmanager_uninstall()
 {
-	global $db;
+	global $db, $cache;
 
 	if($db->table_exists("moods"))
 	{
@@ -341,7 +341,7 @@ function moodmanager_uninstall()
 		$db->drop_column("users", "mood");
 	}
 
-	$db->delete_query("datacache", "title IN('moods')");
+	$cache->delete('moods');
 }
 
 // This function runs when the plugin is activated.
