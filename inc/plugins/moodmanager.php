@@ -416,7 +416,7 @@ function moodmanager_activate()
 
 	$insert_array = array(
 		'title'		=> 'header_moodlink',
-		'template'	=> $db->escape_string('<li><strong><a href="javascript:;" onclick="MyBB.popupWindow(\'/mood.php\'); return false;">{$lang->change_mood}</a></strong></li>'),
+		'template'	=> $db->escape_string('<li><strong><a href="javascript:void(0)" onclick="MyBB.popupWindow(\'/mood.php\'); return false;">{$lang->change_mood}</a></strong></li>'),
 		'sid'		=> '-1',
 		'version'	=> '',
 		'dateline'	=> TIME_NOW
