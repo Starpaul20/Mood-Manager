@@ -244,7 +244,7 @@ if(!$mybb->input['action'])
 	$query = $db->simple_select("moods", "*", "", array('limit_start' => $start, 'limit' => 20, 'order_by' => 'name'));
 	while($mood = $db->fetch_array($query))
 	{
-		if(my_strpos($mood['path'], "p://") || substr($mood['path'], 0, 1) == "/")
+		if(my_validate_url($mood['path'], true))
 		{
 			$image = $mood['path'];
 		}
