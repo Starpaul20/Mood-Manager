@@ -11,7 +11,7 @@ if(!defined("IN_MYBB"))
 }
 
 // Neat trick for caching our custom template(s)
-if(my_strpos($_SERVER['PHP_SELF'], 'showthread.php'))
+if(THIS_SCRIPT == 'showthread.php')
 {
 	global $templatelist;
 	if(isset($templatelist))
@@ -21,7 +21,7 @@ if(my_strpos($_SERVER['PHP_SELF'], 'showthread.php'))
 	$templatelist .= 'postbit_mood,global_mood';
 }
 
-if(my_strpos($_SERVER['PHP_SELF'], 'member.php'))
+if(THIS_SCRIPT == 'member.php')
 {
 	global $templatelist;
 	if(isset($templatelist))
