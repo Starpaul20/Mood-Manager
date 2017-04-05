@@ -44,5 +44,3 @@ $l['confirm_mood_deletion'] = "Are you sure you wish to delete this mood?";
 $l['admin_log_config_moods_add'] = "Added mood #{1} ({2})";
 $l['admin_log_config_moods_edit'] = "Edited mood #{1} ({2})";
 $l['admin_log_config_moods_delete'] = "Deleted mood #{1} ({2})";
-
-?>

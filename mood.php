@@ -93,5 +93,3 @@ if(!$mybb->input['action'])
 	echo $changemood;
 	exit;
 }
-
-?>

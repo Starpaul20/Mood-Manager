@@ -626,5 +626,3 @@ function update_moods()
 
 	$cache->update("moods", $moods);
 }
-
-?>

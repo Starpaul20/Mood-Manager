@@ -215,5 +215,3 @@ $l['mood_woot'] = "Woot";
 $l['mood_worried'] = "Worried";
 $l['mood_yeehaw'] = "Yeehaw";
 $l['mood_zombie'] = "Zombie";
-
-?>
