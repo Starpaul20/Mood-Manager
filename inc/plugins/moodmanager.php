@@ -21,6 +21,56 @@ if(THIS_SCRIPT == 'showthread.php')
 	$templatelist .= 'postbit_mood,global_mood';
 }
 
+if(THIS_SCRIPT == 'private.php')
+{
+	global $templatelist;
+	if(isset($templatelist))
+	{
+		$templatelist .= ',';
+	}
+	$templatelist .= 'postbit_mood,global_mood';
+}
+
+if(THIS_SCRIPT == 'announcements.php')
+{
+	global $templatelist;
+	if(isset($templatelist))
+	{
+		$templatelist .= ',';
+	}
+	$templatelist .= 'postbit_mood,global_mood';
+}
+
+if(THIS_SCRIPT == 'newthread.php')
+{
+	global $templatelist;
+	if(isset($templatelist))
+	{
+		$templatelist .= ',';
+	}
+	$templatelist .= 'postbit_mood,global_mood';
+}
+
+if(THIS_SCRIPT == 'newreply.php')
+{
+	global $templatelist;
+	if(isset($templatelist))
+	{
+		$templatelist .= ',';
+	}
+	$templatelist .= 'postbit_mood,global_mood';
+}
+
+if(THIS_SCRIPT == 'editpost.php')
+{
+	global $templatelist;
+	if(isset($templatelist))
+	{
+		$templatelist .= ',';
+	}
+	$templatelist .= 'postbit_mood,global_mood';
+}
+
 if(THIS_SCRIPT == 'member.php')
 {
 	global $templatelist;
