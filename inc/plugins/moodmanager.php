@@ -668,7 +668,7 @@ function update_moods()
 
 	$moods = array();
 
-	$query = $db->simple_select("moods", "mid, name, path");
+	$query = $db->simple_select("moods", "mid, name, path", "", array('order_by' => 'name', 'order_dir' => 'asc'));
 	while($mood = $db->fetch_array($query))
 	{
 		$moods[$mood['mid']] = $mood;

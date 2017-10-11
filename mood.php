@@ -75,8 +75,7 @@ if(!$mybb->input['action'])
 		eval("\$current_mood = \"".$templates->get("global_mood")."\";");
 	}
 
-	$query = $db->simple_select("moods", "*", "", array('order_by' => 'name', 'order_dir' => 'asc'));
-	while($mood = $db->fetch_array($query))
+	foreach($mood_cache as $mid => $mood)
 	{
 		$mood['name'] = $lang->parse($mood['name']);
 
