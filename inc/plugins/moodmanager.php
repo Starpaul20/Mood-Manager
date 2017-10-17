@@ -414,22 +414,22 @@ function moodmanager_activate()
 		'template'	=> $db->escape_string('<div class="modal">
 <div style="overflow-y: auto; max-height: 400px;" class="modal_{$mybb->user[\'uid\']}">
 <form action="mood.php" method="post" class="moodclass_{$mybb->user[\'uid\']}" onsubmit="javascript: return Mood.submitMood({$mybb->user[\'uid\']});">
-<input type="hidden" name="my_post_key" value="{$mybb->post_code}" />
-<input type="hidden" name="action" value="do_change" />
-<table border="0" cellspacing="{$theme[\'borderwidth\']}" cellpadding="{$theme[\'tablespace\']}" class="tborder">
-<tr>
-<td class="trow1" style="padding: 20px">
-<strong>{$lang->change_your_mood}</strong><br /><br />
-{$lang->current_mood}: {$current_mood}
-<br /><br />
-<select id="mood" name="mood">
-<option value="">{$lang->no_mood}</option>
-{$moodoptions}
-</select>
-<input type="submit" class="button" value="{$lang->change_mood}" />
-</td>
-</tr>
-</table>
+	<input type="hidden" name="my_post_key" value="{$mybb->post_code}" />
+	<input type="hidden" name="action" value="do_change" />
+	<table border="0" cellspacing="{$theme[\'borderwidth\']}" cellpadding="{$theme[\'tablespace\']}" class="tborder">
+		<tr>
+			<td class="trow1" style="padding: 20px">
+				<strong>{$lang->change_your_mood}</strong><br /><br />
+				{$lang->current_mood}: {$current_mood}
+				<br /><br />
+				<select id="mood" name="mood">
+					<option value="">{$lang->no_mood}</option>
+					{$moodoptions}
+				</select>
+				<input type="submit" class="button" value="{$lang->change_mood}" />
+			</td>
+		</tr>
+	</table>
 </form>
 </div>
 </div>'),
@@ -451,12 +451,12 @@ function moodmanager_activate()
 	$insert_array = array(
 		'title'		=> 'mood_updated',
 		'template'	=> $db->escape_string('<table border="0" cellspacing="{$theme[\'borderwidth\']}" cellpadding="{$theme[\'tablespace\']}" class="tborder">
-<tr>
-<td class="trow1" style="padding: 20px">
-<strong>{$lang->mood_updated}</strong><br /><br />
-<blockquote>{$lang->mood_updated_message}</blockquote>
-</td>
-</tr>
+	<tr>
+		<td class="trow1" style="padding: 20px">
+			<strong>{$lang->mood_updated}</strong><br /><br />
+			<blockquote>{$lang->mood_updated_message}</blockquote>
+		</td>
+	</tr>
 </table>'),
 		'sid'		=> '-1',
 		'version'	=> '',
