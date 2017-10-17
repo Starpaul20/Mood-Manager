@@ -1,6 +1,6 @@
 ## INFORMATION ##
 
-Mood Manager (1.2) for MyBB 1.8
+Mood Manager (1.3) for MyBB 1.8
 Created by: Starpaul20
 Copyright: ©2012
 License: GPL
