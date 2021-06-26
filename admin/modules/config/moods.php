@@ -80,8 +80,8 @@ if($mybb->input['action'] == "add")
 
 	$form = new Form("index.php?module=config-moods&amp;action=add", "post", "add");
 	$form_container = new FormContainer($lang->add_mood);
-	$form_container->output_row($lang->name." <em>*</em>", htmlspecialchars_uni($lang->name_desc), $form->generate_text_box('name', $mybb->input['name'], array('id' => 'name')), 'name');
-	$form_container->output_row($lang->image_path." <em>*</em>", $lang->image_path_desc, $form->generate_text_box('path', $mybb->input['path'], array('id' => 'path')), 'path');
+	$form_container->output_row($lang->name." <em>*</em>", htmlspecialchars_uni($lang->name_desc), $form->generate_text_box('name', $mybb->get_input('name'), array('id' => 'name')), 'name');
+	$form_container->output_row($lang->image_path." <em>*</em>", $lang->image_path_desc, $form->generate_text_box('path', $mybb->get_input('path'), array('id' => 'path')), 'path');
 	$form_container->end();
 
 	$buttons[] = $form->generate_submit_button($lang->save_mood);
@@ -135,7 +135,7 @@ if($mybb->input['action'] == "add_multiple")
 						$ext = get_extension($file);
 						if($ext == "gif" || $ext == "jpg" || $ext == "jpeg" || $ext == "png" || $ext == "bmp")
 						{
-							if(!$amoods[$path.$file])
+							if(!isset($amoods[$path.$file]))
 							{
 								$moods[] = $file;
 							}
@@ -279,7 +279,7 @@ if($mybb->input['action'] == "add_multiple")
 	}
 
 	$form_container = new FormContainer($lang->add_multiple_moods);
-	$form_container->output_row($lang->path_to_moods." <em>*</em>", $lang->path_to_moods_desc, $form->generate_text_box('pathfolder', $mybb->input['pathfolder'], array('id' => 'pathfolder')), 'pathfolder');
+	$form_container->output_row($lang->path_to_moods." <em>*</em>", $lang->path_to_moods_desc, $form->generate_text_box('pathfolder', $mybb->get_input('pathfolder'), array('id' => 'pathfolder')), 'pathfolder');
 	$form_container->end();
 
 	$buttons[] = $form->generate_submit_button($lang->show_moods);
