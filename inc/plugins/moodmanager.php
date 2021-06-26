@@ -485,7 +485,7 @@ function moodmanager_activate()
 	);
 	$db->insert_query("templates", $insert_array);
 
-	include MYBB_ROOT."/inc/adminfunctions_templates.php";
+	require_once MYBB_ROOT."/inc/adminfunctions_templates.php";
 	find_replace_templatesets("postbit", "#".preg_quote('{$post[\'user_details\']}')."#i", '{$post[\'user_details\']}{$post[\'usermood\']}');
 	find_replace_templatesets("postbit_classic", "#".preg_quote('{$post[\'user_details\']}')."#i", '{$post[\'user_details\']}{$post[\'usermood\']}');
 	find_replace_templatesets("member_profile", "#".preg_quote('{$online_status}')."#i", '{$online_status}<br /><strong>{$lang->mood}:</strong> {$mood}');
@@ -499,7 +499,7 @@ function moodmanager_deactivate()
 	global $db;
 	$db->delete_query("templates", "title IN('postbit_mood','mood','mood_option','mood_updated','header_moodlink','global_mood')");
 
-	include MYBB_ROOT."/inc/adminfunctions_templates.php";
+	require_once MYBB_ROOT."/inc/adminfunctions_templates.php";
 	find_replace_templatesets("postbit", "#".preg_quote('{$post[\'usermood\']}')."#i", '', 0);
 	find_replace_templatesets("postbit_classic", "#".preg_quote('{$post[\'usermood\']}')."#i", '', 0);
 	find_replace_templatesets("member_profile", "#".preg_quote('<br /><strong>{$lang->mood}:</strong> {$mood}')."#i", '', 0);
