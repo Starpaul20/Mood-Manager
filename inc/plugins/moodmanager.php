@@ -11,74 +11,77 @@ if(!defined("IN_MYBB"))
 }
 
 // Neat trick for caching our custom template(s)
-if(THIS_SCRIPT == 'showthread.php')
+if(defined('THIS_SCRIPT'))
 {
-	global $templatelist;
-	if(isset($templatelist))
+	if(THIS_SCRIPT == 'showthread.php')
 	{
-		$templatelist .= ',';
+		global $templatelist;
+		if(isset($templatelist))
+		{
+			$templatelist .= ',';
+		}
+		$templatelist .= 'postbit_mood,global_mood';
 	}
-	$templatelist .= 'postbit_mood,global_mood';
-}
 
-if(THIS_SCRIPT == 'private.php')
-{
-	global $templatelist;
-	if(isset($templatelist))
+	if(THIS_SCRIPT == 'private.php')
 	{
-		$templatelist .= ',';
+		global $templatelist;
+		if(isset($templatelist))
+		{
+			$templatelist .= ',';
+		}
+		$templatelist .= 'postbit_mood,global_mood';
 	}
-	$templatelist .= 'postbit_mood,global_mood';
-}
 
-if(THIS_SCRIPT == 'announcements.php')
-{
-	global $templatelist;
-	if(isset($templatelist))
+	if(THIS_SCRIPT == 'announcements.php')
 	{
-		$templatelist .= ',';
+		global $templatelist;
+		if(isset($templatelist))
+		{
+			$templatelist .= ',';
+		}
+		$templatelist .= 'postbit_mood,global_mood';
 	}
-	$templatelist .= 'postbit_mood,global_mood';
-}
 
-if(THIS_SCRIPT == 'newthread.php')
-{
-	global $templatelist;
-	if(isset($templatelist))
+	if(THIS_SCRIPT == 'newthread.php')
 	{
-		$templatelist .= ',';
+		global $templatelist;
+		if(isset($templatelist))
+		{
+			$templatelist .= ',';
+		}
+		$templatelist .= 'postbit_mood,global_mood';
 	}
-	$templatelist .= 'postbit_mood,global_mood';
-}
 
-if(THIS_SCRIPT == 'newreply.php')
-{
-	global $templatelist;
-	if(isset($templatelist))
+	if(THIS_SCRIPT == 'newreply.php')
 	{
-		$templatelist .= ',';
+		global $templatelist;
+		if(isset($templatelist))
+		{
+			$templatelist .= ',';
+		}
+		$templatelist .= 'postbit_mood,global_mood';
 	}
-	$templatelist .= 'postbit_mood,global_mood';
-}
 
-if(THIS_SCRIPT == 'editpost.php')
-{
-	global $templatelist;
-	if(isset($templatelist))
+	if(THIS_SCRIPT == 'editpost.php')
 	{
-		$templatelist .= ',';
+		global $templatelist;
+		if(isset($templatelist))
+		{
+			$templatelist .= ',';
+		}
+		$templatelist .= 'postbit_mood,global_mood';
 	}
-	$templatelist .= 'postbit_mood,global_mood';
-}
 
-if(THIS_SCRIPT == 'member.php')
-{
-	global $templatelist;
-	if(isset($templatelist))
+	if(THIS_SCRIPT == 'member.php')
 	{
-		$templatelist .= ',';
+		global $templatelist;
+		if(isset($templatelist))
+		{
+			$templatelist .= ',';
+		}
+		$templatelist .= 'global_mood';
 	}
-	$templatelist .= 'global_mood';
 }
 
 // Tell MyBB when to run the hooks
