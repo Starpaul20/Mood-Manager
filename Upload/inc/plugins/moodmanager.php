@@ -110,7 +110,7 @@ function moodmanager_info()
 		"website"			=> "http://galaxiesrealm.com/index.php",
 		"author"			=> "Starpaul20",
 		"authorsite"		=> "http://galaxiesrealm.com/index.php",
-		"version"			=> "1.4",
+		"version"			=> "1.5",
 		"codename"			=> "moodmanager",
 		"compatibility"		=> "18*"
 	);
