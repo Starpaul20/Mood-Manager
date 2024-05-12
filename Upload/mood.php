@@ -75,6 +75,7 @@ if(!$mybb->input['action'])
 		eval("\$current_mood = \"".$templates->get("global_mood")."\";");
 	}
 
+	$moodoptions = '';
 	foreach($mood_cache as $mid => $mood)
 	{
 		$mood['name'] = $lang->parse($mood['name']);
